@@ -1,3 +1,9 @@
+## Umass Lowell ARCapstone
+
+Project contains Unity ARKit plugin utilizing apple ARKit 2.  Currently, development is being done to the **UnityARObjectAnchor** scene.  The main scripts concerned with at the moment are **UnityARCameraManger.cs** and **GenerateObjectAnchor.cs**.  
+
+The below documentation describes the forked Unity-ARKit-Plugin.
+
 # Unity-ARKit-Plugin #
 
 [**Latest Update:** This plugin now supports new ARKit functionality exposed in ARKit 2.0.  See [Whats New In ARKit 2.0](./docs/WhatsNewInARKit2_0.md) for details.]
