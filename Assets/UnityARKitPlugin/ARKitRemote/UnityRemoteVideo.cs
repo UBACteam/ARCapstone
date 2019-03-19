@@ -21,7 +21,7 @@ namespace UnityEngine.XR.iOS
 		private GCHandle m_pinnedYArray;
 		private GCHandle m_pinnedUVArray;
 
-		#if !UNITY_EDITOR && UNITY_IOS
+#if !UNITY_EDITOR && UNITY_IOS
 
 		public void Start()
 		{
@@ -103,12 +103,15 @@ namespace UnityEngine.XR.iOS
 
 			m_Session.SetCapturePixelData (true, PinByteArray(ref m_pinnedYArray,YByteArrayForFrame(currentFrameIndex)), PinByteArray(ref m_pinnedUVArray,UVByteArrayForFrame(currentFrameIndex)));
 
-			connectToEditor.SendToEditor (ConnectionMessageIds.screenCaptureYMsgId, 
-					CompressionHelper.ByteArrayCompress(YByteArrayForFrame(1-currentFrameIndex)));
-			connectToEditor.SendToEditor (ConnectionMessageIds.screenCaptureUVMsgId, 
-					CompressionHelper.ByteArrayCompress(UVByteArrayForFrame(1-currentFrameIndex)));
+			//connectToEditor.SendToEditor (ConnectionMessageIds.screenCaptureYMsgId, 
+			//		CompressionHelper.ByteArrayCompress(YByteArrayForFrame(1-currentFrameIndex)));
+			//connectToEditor.SendToEditor (ConnectionMessageIds.screenCaptureUVMsgId, 
+					//CompressionHelper.ByteArrayCompress(UVByteArrayForFrame(1-currentFrameIndex)));
+             
+            connectToEditor.SendToEditor(ConnectionMessageIds.screenCaptureYMsgId, ByteConverter.ConvertByteCompress(YByteArrayForFrame(1 - currentFrameIndex)));
+            connectToEditor.SendToEditor(ConnectionMessageIds.screenCaptureUVMsgId, ByteConverter.ConvertByteCompress(UVByteArrayForFrame(1 - currentFrameIndex)));
 			
 		}
-		#endif
-	}
+#endif
+    }
 }

@@ -44,7 +44,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/UnityARKitPlugin/Examples/ARKit2.0/UnityARWorldMap/UnityARWorldMapSerialized.unity
     guid: 5886c251920f2454b98358e6027f37df
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnityARKitPlugin/Examples/ARKit2.0/UnityARObjectAnchor/UnityARObjectAnchor.unity
     guid: 9b7966300d2d04d8e86ace41d59d178c
+  - enabled: 0
+    path: Assets/Scenes/ARCapstone_snap_to_plane.unity
+    guid: 3c7df6e7d92e749a8856a0725d5160e5
+  - enabled: 0
+    path: Assets/UnityARKitPlugin/Examples/AddRemoveAnchorExample/AddRemoveAnchorScene.unity
+    guid: c59061d8b0a364aa58f20007a956f23a
+  - enabled: 1
+    path: Assets/Scenes/ARCapstone_origin_placement.unity
+    guid: 1ab2cc58b9997463e887576d5cad582f
   m_configObjects: {}

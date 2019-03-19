@@ -160,8 +160,8 @@ namespace UnityEngine.XR.iOS
 		{
 			if (!bTexturesInitialized)
 				return;
-			remoteScreenYTex.LoadRawTextureData(CompressionHelper.ByteArrayDecompress(mea.data));
-			remoteScreenYTex.Apply ();
+            remoteScreenYTex.LoadRawTextureData(ByteConverter.ConvertByteDecompress(mea.data));
+            remoteScreenYTex.Apply ();
 			UnityARVideo arVideo = Camera.main.GetComponent<UnityARVideo>();
 			if (arVideo) {
 				arVideo.SetYTexure(remoteScreenYTex);
@@ -173,8 +173,8 @@ namespace UnityEngine.XR.iOS
 		{
 			if (!bTexturesInitialized)
 				return;
-			remoteScreenUVTex.LoadRawTextureData(CompressionHelper.ByteArrayDecompress(mea.data));
-			remoteScreenUVTex.Apply ();
+            remoteScreenUVTex.LoadRawTextureData(ByteConverter.ConvertByteDecompress(mea.data));
+            remoteScreenUVTex.Apply ();
 			UnityARVideo arVideo = Camera.main.GetComponent<UnityARVideo>();
 			if (arVideo) {
 				arVideo.SetUVTexure(remoteScreenUVTex);
