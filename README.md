@@ -1,6 +1,10 @@
 ## Umass Lowell ARCapstone
 
-Project contains Unity ARKit plugin utilizing apple ARKit 2.  Currently, development is being done to the **UnityARObjectAnchor** scene.  The main scripts concerned with at the moment are **UnityARCameraManger.cs** and **GenerateObjectAnchor.cs**.  
+Project contains Unity ARKit plugin utilizing apple ARKit 2.  Currently, development is being done on the  **ARCapstone_origin_placement** scene, for orienting and aligning objects depending on the users location.  Also, **ARCapstone_snap_to_plane** contains some experimental work on object placement snapping.  
+These scenes are found in the Assets/Scenes directory
+
+
+---
 
 The below documentation describes the forked Unity-ARKit-Plugin.
 
