@@ -53,7 +53,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/UnityARKitPlugin/Examples/AddRemoveAnchorExample/AddRemoveAnchorScene.unity
     guid: c59061d8b0a364aa58f20007a956f23a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ARCapstone_origin_placement.unity
     guid: 1ab2cc58b9997463e887576d5cad582f
+  - enabled: 1
+    path: Assets/Scenes/ARCapstone_alignment_calibration.unity
+    guid: d32938c2d53814df3a81bcee23c20267
   m_configObjects: {}
