@@ -18,6 +18,7 @@ public class AlignObjects : MonoBehaviour
     float dist;
     Vector3 offset;
     GameObject[] cadObjs;
+    GameObject mainCalibraitonObj;
 
     public void CapturePoint()
     {
@@ -28,7 +29,8 @@ public class AlignObjects : MonoBehaviour
 
     private void Start()
     {
-        cadObjs = GameObject.FindGameObjectsWithTag("cadobject");
+        //cadObjs = GameObject.FindGameObjectsWithTag("cadobject");
+        mainCalibraitonObj = GameObject.FindGameObjectWithTag("calibration");
 
     }
 
@@ -56,21 +58,26 @@ public class AlignObjects : MonoBehaviour
             statusText.text = "Tap 2nd calibration point";
             if (Input.touchCount > 0)
             {
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                var hit = new RaycastHit();
-                if (Physics.Raycast(ray, out hit))
+                //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+                float yAngleVal = Camera.main.transform.rotation.eulerAngles.y - 180;
+                //var hit = new RaycastHit();
+                //if (Physics.Raycast(ray, out hit))
+                //{
+                //var trans = hit.point - point2.transform.position;
+                var trans = point - point2.transform.position;
+                translationVectorAvg = trans;
+                //translationVectorAvg = (translationVectorAvg + trans) / 2;
+                /*foreach (GameObject go in cadObjs)
                 {
-                    var trans = hit.point - point2.transform.position;
-                    translationVectorAvg = trans;
-                    //translationVectorAvg = (translationVectorAvg + trans) / 2;
-                    foreach (GameObject go in cadObjs)
-                    {
-                        go.transform.position += translationVectorAvg;
-                    }
-                    acquire = false;
-                    pointsCaptured++;
-                    statusText.text = "";
-                }
+                    go.transform.position += translationVectorAvg;
+                }*/
+                mainCalibraitonObj.transform.position += translationVectorAvg;
+                mainCalibraitonObj.transform.eulerAngles = new Vector3(0f, yAngleVal, 0f);
+                acquire = false;
+                pointsCaptured++;
+                statusText.text = "";
+                //}
             }
         }
         else
