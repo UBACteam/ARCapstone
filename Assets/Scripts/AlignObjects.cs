@@ -8,27 +8,32 @@ public class AlignObjects : MonoBehaviour
 {
     public GameObject point1;
     public GameObject point2;
+    public GameObject point3;
+    public GameObject pointMarker;
     public Text statusText;
 
     uint pointsCaptured = 0;
     Vector3 translationVectorSum = new Vector3(0, 0, 0);
-    float translationAngleSum = 0f;
     bool acquire = false;
     bool dragging = false;
     Transform toDrag;
     float dist;
     Vector3 offset;
     GameObject mainCalibrationObj;
-    GameObject[] cadObjs;
-    readonly int numCalPoints = 2;
+    List<GameObject> cadObjs = new List<GameObject>();
+    int numCalPoints;
+    private GameObject[] points;
+    private Vector3[] capturedPoints = new Vector3[3];
 
+    // Set acquire for all points to capture
     public void CapturePoint()
     {
-        if (pointsCaptured == 2)
+        if (pointsCaptured == 3)
             return;
         StartCoroutine("SetAcquire");
     }
 
+    // Set acquire after delay to account for touch for button press
     private IEnumerator SetAcquire()
     {
         yield return new WaitForSeconds(0.5f);
@@ -39,18 +44,27 @@ public class AlignObjects : MonoBehaviour
     private void Start()
     {
         mainCalibrationObj = GameObject.FindGameObjectWithTag("calibration");
-        cadObjs = GameObject.FindGameObjectsWithTag("cadobject");
-
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("cadobject"))
+        {
+            cadObjs.Add(go);
+        }
+        cadObjs.Add(mainCalibrationObj);
+        points = new GameObject[3] { point1, point2, point3 };
+        numCalPoints = points.Length;
     }
 
     private void AcquirePoint()
     {
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-        var calPoint = pointsCaptured == 0 ? point1 : point2;
-        var trans = point - calPoint.transform.position;
-        float yAngleVal = Camera.main.transform.rotation.eulerAngles.y - 180;
+        // Cal point is just beyond finger on screen in real-word coords
+        Vector3 capPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+        Instantiate(pointMarker, capPoint, Quaternion.identity);
+        if (pointsCaptured < 3)
+        {
+            capturedPoints[pointsCaptured] = capPoint;
+        }
+        var calPoint = points[pointsCaptured];
+        var trans = capPoint - calPoint.transform.position;
         translationVectorSum += trans;
-        translationAngleSum += yAngleVal;
         acquire = false;
         pointsCaptured++;
         statusText.text = "";
@@ -59,20 +73,29 @@ public class AlignObjects : MonoBehaviour
 
     private void Update()
     {
-        if (pointsCaptured == 0 && acquire)
+        if (pointsCaptured < points.Length - 1 && acquire)
         {
-            statusText.text = "Tap 1st calibration point";
+            statusText.text = "Tap calibration point " + (pointsCaptured + 1);
             if (Input.touchCount > 0)
+            {
+                statusText.text = "Calling acq point";
                 AcquirePoint();
+
+            }
         }
-        else if (pointsCaptured == 1 && acquire)
+        else if (pointsCaptured < points.Length && acquire)
         {
-            statusText.text = "Tap 2nd calibration point";
+            statusText.text = "Tap calibration point " + (pointsCaptured + 1);
             if (Input.touchCount > 0)
             {
                 AcquirePoint();
                 mainCalibrationObj.transform.position += translationVectorSum / numCalPoints;
-                mainCalibrationObj.transform.eulerAngles = new Vector3(0f, translationAngleSum / numCalPoints, 0f);
+                // Rotation is angle between forward in world coordinates and normal vector of calibration plane
+                Vector3 side1 = capturedPoints[1] - capturedPoints[0];
+                Vector3 side2 = capturedPoints[2] - capturedPoints[0];
+                Vector3 normal = Vector3.Cross(side2, side1);
+                float transAngle = Vector3.Angle(mainCalibrationObj.transform.forward, normal);
+                mainCalibrationObj.transform.eulerAngles = new Vector3(0f, transAngle, 0f);
             }
         }
         else
