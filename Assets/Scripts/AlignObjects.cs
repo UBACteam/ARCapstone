@@ -120,7 +120,7 @@ public class AlignObjects : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(pos);
-            if (Physics.Raycast(ray, out hit) && (hit.collider.tag == "cadobject"))
+            if (Physics.Raycast(ray, out hit) && (hit.collider.tag == "calibration"))
             {
                 toDrag = hit.transform;
                 dist = hit.transform.position.z - Camera.main.transform.position.z;
