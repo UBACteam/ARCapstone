@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - cadobject
+  - calibration
+  - debug
   layers:
   - Default
   - TransparentFX
