@@ -13,7 +13,7 @@ public class AlignObjects : MonoBehaviour
     public Text statusText;
 
     uint pointsCaptured = 0;
-    Vector3 translationVectorSum = new Vector3(0, 0, 0);
+    Vector3 translationVector;
     bool acquire = false;
     bool dragging = false;
     Transform toDrag;
@@ -23,7 +23,8 @@ public class AlignObjects : MonoBehaviour
     List<GameObject> cadObjs = new List<GameObject>();
     int numCalPoints;
     private GameObject[] points;
-    private Vector3[] capturedPoints = new Vector3[3];
+    private readonly Vector3[] capturedPoints = new Vector3[3];
+
 
     // Set acquire for all points to capture
     public void CapturePoint()
@@ -55,16 +56,17 @@ public class AlignObjects : MonoBehaviour
 
     private void AcquirePoint()
     {
-        // Cal point is just beyond finger on screen in real-word coords
+        // Cal point is just beyond finger on screen in real-word coords (min draw dist from screen)
         Vector3 capPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
         Instantiate(pointMarker, capPoint, Quaternion.identity);
         if (pointsCaptured < 3)
         {
             capturedPoints[pointsCaptured] = capPoint;
         }
-        var calPoint = points[pointsCaptured];
-        var trans = capPoint - calPoint.transform.position;
-        translationVectorSum += trans;
+        if (pointsCaptured == 2)
+        {
+            translationVector = capPoint - points[2].transform.position;
+        }
         acquire = false;
         pointsCaptured++;
         statusText.text = "";
@@ -78,7 +80,6 @@ public class AlignObjects : MonoBehaviour
             statusText.text = "Tap calibration point " + (pointsCaptured + 1);
             if (Input.touchCount > 0)
             {
-                statusText.text = "Calling acq point";
                 AcquirePoint();
 
             }
@@ -89,7 +90,7 @@ public class AlignObjects : MonoBehaviour
             if (Input.touchCount > 0)
             {
                 AcquirePoint();
-                mainCalibrationObj.transform.position += translationVectorSum / numCalPoints;
+                mainCalibrationObj.transform.position += translationVector;
                 // Rotation is angle between forward in world coordinates and normal vector of calibration plane
                 Vector3 side1 = capturedPoints[1] - capturedPoints[0];
                 Vector3 side2 = capturedPoints[2] - capturedPoints[0];

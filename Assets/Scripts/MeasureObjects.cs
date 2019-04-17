@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugObjects : MonoBehaviour
+public class MeasureObjects : MonoBehaviour
 {
-    // The material to apply to debug objects
-    public Material debugMaterial;  
-    // The dropdown where the user chooses to what side of the face they want the debug object
+    // The material to apply to mirrored objects
+    public Material graduatedMaterial;  
+    // The dropdown where the user chooses to what side of the face they want the mirrored object
     public Dropdown directionDropdown;
-    // The number of graduations on the debug skin - to be used in calculations
+    // The number of graduations on the mirrored object's skin - to be used in calculations
     public int graduations;
     // To output the size of each graduation
     public Text measurementText;
 
-    bool isDebugging = false;
-    GameObject debugObj;
+    bool isMeasuring = false;
+    GameObject mirrorObj;
     GameObject parentObj;
-    bool getDebugPoint = false;
+    bool getMeasurement = false;
 
     void Start()
     {
@@ -26,18 +26,18 @@ public class DebugObjects : MonoBehaviour
 
 
 
-    public void DebugObject()
+    public void MeasureObject()
     {
-        if (isDebugging)
+        if (isMeasuring)
         {
-            Destroy(debugObj);
-            isDebugging = false;
+            Destroy(mirrorObj);
+            isMeasuring = false;
             measurementText.text = "";
         }
         else
         {
-            measurementText.text = "Tap face to debug";
-            getDebugPoint = true;
+            measurementText.text = "Tap face to measure from";
+            getMeasurement = true;
         }
 
     }
@@ -45,7 +45,7 @@ public class DebugObjects : MonoBehaviour
 
     private void Update()
     {
-        if (!getDebugPoint || Input.touchCount <= 0)
+        if (!getMeasurement || Input.touchCount <= 0)
             return;
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -53,8 +53,8 @@ public class DebugObjects : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             var go = hit.transform.gameObject;
-            DebugPlacement dp = go.GetComponent<DebugPlacement>();
-            if (!dp || !dp.debug || go.tag != "cadobject")
+            MeasureObject dp = go.GetComponent<MeasureObject>();
+            if (!dp || !dp.measure || go.tag != "cadobject")
                 return;
 
             // Vector facing out from plane that was hit
@@ -77,7 +77,7 @@ public class DebugObjects : MonoBehaviour
             // Account for top/bottom placement when choosing back of object
             int rightMult = (normal == go.transform.forward) ? -1 : 1;
 
-            // Directions to place debug object, depending on dropdown values
+            // Directions to place mirrored object, depending on dropdown values
             Vector3[] directions = new Vector3[] {
                 (Quaternion.AngleAxis(90, Vector3.up) * normal) * xMag,
                 (Quaternion.AngleAxis(-90, Vector3.up) * normal) * xMag,
@@ -85,7 +85,7 @@ public class DebugObjects : MonoBehaviour
                 (Quaternion.AngleAxis(-90, right * rightMult) * normal) * yMag,
             };
             Vector3 direction = directions[directionDropdown.value];
-            // Place new debug object beside current object.
+            // Place new mirrored object beside current object.
             // Add same parent so will move with the rest of the scene
             GameObject newObj = Instantiate(
                 go,
@@ -95,10 +95,10 @@ public class DebugObjects : MonoBehaviour
                 );
             measurementText.text = ((xMag * 100) / graduations).ToString("F2") + "cm/grad horizontal\n" + 
                 ((yMag * 100) / graduations).ToString("F2") + "cm/grad vertical";
-            newObj.GetComponent<Renderer>().material = debugMaterial;
-            debugObj = newObj;
-            isDebugging = true;
-            getDebugPoint = false;
+            newObj.GetComponent<Renderer>().material = graduatedMaterial;
+            mirrorObj = newObj;
+            isMeasuring = true;
+            getMeasurement = false;
         }
     }
 }

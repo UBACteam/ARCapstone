@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugPlacement : MonoBehaviour
+public class MeasureObject : MonoBehaviour
 {
-    public bool debug = false;
+    public bool measure = false;
     public Bounds bounds;
 
     private void Awake()
     {
-        if (!debug)
+        if (!measure)
             return;
         // Initial bounds. 
         // Inititialized here because bound directions after rotation will not be true to visible object size
