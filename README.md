@@ -10,6 +10,8 @@ Measure Objects (`Scripts/MeasureObjects.cs`): Actually handles the measurement 
 
 More detailed documenation on the develpoments made here, and a complete walkthrough on how to use this software can be seen in the accompanying Capstone Report and User Manul.
 
+Note: scripts in the `Assets/Scripts` folder were created as part of this project, while those in all `Assets/UnityARKitPlugin` subdirectories are from the Unity ARKit plugin itself: https://bitbucket.org/Unity-Technologies/unity-arkit-plugin
+
 ---
 
 The below documentation is copied from the initial Unity-ARKit-Plugin that this project is based off of.
