@@ -1,12 +1,18 @@
 ## Umass Lowell ARCapstone
+This project contains work done for UMass lowell capstone industry program for industry sponsors at General Dynamica - Bath Iron Works.
+It utilizes Unit's ARkit plugin, and in specific ARKit 2 features.
 
-Project contains Unity ARKit plugin utilizing apple ARKit 2.  Currently, development is being done on the  **ARCapstone_origin_placement** scene, for orienting and aligning objects depending on the users location.  Also, **ARCapstone_snap_to_plane** contains some experimental work on object placement snapping.  
-These scenes are found in the Assets/Scenes directory
+The main work done here is regarding coordinate plane alignemnt in order to place object at predefined points, and measurement in order to measure the accuracy of these placements.  This is shown in the `ARCapstone_alignment_calibration` scene in the `Assets/Scenes` directory.  The scene utilizes functionality from the Unity ARkit plugin and also the following custom scripts:
+Debug Movement (`Assets/Scripts/DebugMovement.cs`): Captures positional, speed, and aceleration data of the device throughout the session and displays this to the screen. Also allows for a threshold to be set and if the user exceeds this, a UI warning will be shown.
+Align Objects (`Assets/Scripts/AlignObjects.cs`): Allows user to collect 3 calibration points.  From this, coordainte planes will be aligned with the real world, and positions and rotations of all objects updated.
+Measure Ojbect (`Assets/Scripts/MeasureObject.s`): Simple script that is to be attached to all objects that are desired to suport measurement features.  Contains a Unity checkbox that can be clicked to enable measurement in the app. Also captures initial object bounds before any transforamtions are applied, for easier calculation when later measuring
+Measure Objects (`Scripts/MeasureObjects.cs`): Actually handles the measurement of objects.  Supports the creation of a reflected, graduated object in any direction from any face of any object in the scene.  The direction to place the measured object is chosen by dropdown, and the face the place the object relative to is chosen by user tapping.
 
+More detailed documenation on the develpoments made here, and a complete walkthrough on how to use this software can be seen in the accompanying Capstone Report and User Manul.
 
 ---
 
-The below documentation describes the forked Unity-ARKit-Plugin.
+The below documentation is copied from the initial Unity-ARKit-Plugin that this project is based off of.
 
 # Unity-ARKit-Plugin #
 
