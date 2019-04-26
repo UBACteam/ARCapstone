@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Used/modified from Unity ARKit Plugin
+using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
