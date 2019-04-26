@@ -52,6 +52,10 @@ public class AlignObjects : MonoBehaviour
         cadObjs.Add(mainCalibrationObj);
         points = new GameObject[3] { point1, point2, point3 };
         numCalPoints = points.Length;
+        foreach (GameObject go in cadObjs)
+        {
+            go.GetComponent<Renderer>().enabled = false;
+        }
     }
 
     private void AcquirePoint()
@@ -97,6 +101,10 @@ public class AlignObjects : MonoBehaviour
                 Vector3 normal = Vector3.Cross(side2, side1);
                 float transAngle = Vector3.Angle(mainCalibrationObj.transform.forward, normal);
                 mainCalibrationObj.transform.eulerAngles = new Vector3(0f, transAngle, 0f);
+                foreach (GameObject go in cadObjs)
+                {
+                    go.GetComponent<Renderer>().enabled = true;
+                }
             }
         }
         else

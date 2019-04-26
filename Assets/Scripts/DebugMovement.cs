@@ -27,7 +27,6 @@ public class DebugMovement : MonoBehaviour {
 
     void FirstFrameUpdate(UnityARCamera cam)
     {
-        Debug.Log("got called!");
         sessionStarted = true;
         lastPos = m_camera.transform.localPosition;
         UnityARSessionNativeInterface.ARFrameUpdatedEvent -= FirstFrameUpdate;
@@ -36,10 +35,8 @@ public class DebugMovement : MonoBehaviour {
     void Update()
     {
 
-        if (m_camera == null || !sessionStarted) {
-            Debug.Log("returning!");
+        if (m_camera == null || !sessionStarted)
             return;
-        }
 
         passedTime += Time.deltaTime;
         frames++;
