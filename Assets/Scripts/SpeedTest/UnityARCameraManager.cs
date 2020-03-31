@@ -1,3 +1,10 @@
+
+/*
+    Author: Jacob Sword
+    Last Edited: February 2020
+        Editing Engineer: Joel Rattray 
+    These comments are to test Git Commits 
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
