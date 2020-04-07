@@ -18,6 +18,7 @@ public class UnityARCameraManager : MonoBehaviour {
     public Text warningText;
     public Text posText;
     public Text accText;
+    public Text debugAccText;   //Added 6 Apr for Acceleration Debug
     public Text directionText;
     // Number of frames passed before next speed calculation
     public int speedFrames = 10;
@@ -128,7 +129,7 @@ public class UnityARCameraManager : MonoBehaviour {
             passedTime += Time.deltaTime;
 
             // Get accelerometer difference (experimental)
-            float acc = Input.acceleration.z - lastAcc.z;
+            double  acc = Input.acceleration.z - lastAcc.z;     //Changed from Float to double on 6 Apr to try and get Acc data to show
             if (acc > 0)
                 dir = Direction.backward;
             else if (acc < 0)
@@ -137,7 +138,7 @@ public class UnityARCameraManager : MonoBehaviour {
             // Do speed calculation and update UI
             if (frames % speedFrames == 0)
             {
-                float dist = Vector3.Distance(newPos, lastPos);
+                double dist = Vector3.Distance(newPos, lastPos);        //Changed from Float to double on 6 Apr to try and get Acc data to show | Added 6 Apr
                 speed = dist / passedTime;
                 speedText.text = "Speed " + speed.ToString();
                 if (speed > 1)
@@ -160,7 +161,9 @@ public class UnityARCameraManager : MonoBehaviour {
                 lastAcc = Input.acceleration;
                 // Debug text
                 posText.text = "Pos: " + m_camera.transform.localPosition;
-                accText.text = "Acc: " + (Input.acceleration - lastAcc);
+                accText.text = "Acc: " + (string.Format("{0:0.000000000000}", (Input.acceleration - lastAcc)));  //Ensure it's formatting value to 12 places after the decimal point so that it's clear whether there's any value in there. 
+                debugAccText.text = "Acc Debug: " + (Input.acceleration); //Display Current Acceleration to debug the Acceleration bug: Added 6 Apr 
+                debugAccTypeText.text = "Acc Type: " + (Input.acceleration.GetType());      //Added 6 Apr: Should Display type of the Input.accleration val to determine if it's an int
             }
             frames++;
             // Move game camera to new position/rotation sensed
