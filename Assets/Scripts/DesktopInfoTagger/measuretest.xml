@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMarkerData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.172116011</x>
+      <y>-0.8078765</y>
+      <z>-0.646990061</z>
+    </position>
+    <orientation>
+      <x>0.00144950463</x>
+      <y>0.996119</y>
+      <z>-0.001490058</z>
+      <w>-0.08799195</w>
+      <eulerAngles>
+        <x>0.155470029</x>
+        <y>190.096466</y>
+        <z>0.180481762</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>c</title>
+    <AudioSubdirectory>media_for_compartment/1562158855</AudioSubdirectory>
+    <created>2019-07-03T13:00:55.742115-04:00</created>
+    <WavFileArray />
+    <ScreenGrab m_user="deheath" m_timestmap="2019-07-05T13:12:40.312164-04:00">
+      <m_filePath>media_for_compartment/1562158855/marker_grab.jpg</m_filePath>
+    </ScreenGrab>
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>DD488B89-939D-4E84-8CC4-2A38C022ACA5</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.306164056</x>
+      <y>-0.8078765</y>
+      <z>-1.48822832</z>
+    </position>
+    <orientation>
+      <x>-0.0005179005</x>
+      <y>0.9013603</y>
+      <z>0.0007012406</z>
+      <w>-0.433069378</w>
+      <eulerAngles>
+        <x>359.953278</x>
+        <y>231.325073</y>
+        <z>359.9117</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>b</title>
+    <AudioSubdirectory>media_for_compartment/1562158862</AudioSubdirectory>
+    <created>2019-07-03T13:01:02.416952-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>C1649BF0-B145-4116-BF0A-DDD2B576E1CE</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-0.9749752</x>
+      <y>-0.8078765</y>
+      <z>-0.772379637</z>
+    </position>
+    <orientation>
+      <x>-0.000752492</x>
+      <y>0.961770058</y>
+      <z>0.0007425248</z>
+      <w>-0.273856372</w>
+      <eulerAngles>
+        <x>359.941772</x>
+        <y>211.787811</y>
+        <z>359.893768</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>d</title>
+    <AudioSubdirectory>media_for_compartment/1562158870</AudioSubdirectory>
+    <created>2019-07-03T13:01:10.145261-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>1F5E3690-6E0C-4DC8-BD35-8A50CFB0A22E</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-1.06811023</x>
+      <y>-0.8078765</y>
+      <z>-0.45301944</z>
+    </position>
+    <orientation>
+      <x>-0.000706533</x>
+      <y>0.816138566</y>
+      <z>0.0007374906</z>
+      <w>-0.5778554</w>
+      <eulerAngles>
+        <x>359.9778</x>
+        <y>250.599762</y>
+        <z>359.8851</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>ruler</title>
+    <AudioSubdirectory>media_for_compartment/1562158874</AudioSubdirectory>
+    <created>2019-07-03T13:01:14.60696-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>B64CB763-ACA5-4849-B541-53290245C8BA</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-1.16732335</x>
+      <y>-0.735115767</y>
+      <z>0.373182356</z>
+    </position>
+    <orientation>
+      <x>-0.000456745183</x>
+      <y>0.595436</y>
+      <z>0</z>
+      <w>-0.8034027</w>
+      <eulerAngles>
+        <x>0.0420494042</x>
+        <y>286.912537</y>
+        <z>359.968842</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>e</title>
+    <AudioSubdirectory>media_for_compartment/1562158904</AudioSubdirectory>
+    <created>2019-07-03T13:01:44.14045-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>5D3B5CB7-3935-477F-BBCF-6C51CE9C3C3A</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.0318306834</x>
+      <y>-0.9416122</y>
+      <z>0.6804357</z>
+    </position>
+    <orientation>
+      <x>0.00124487793</x>
+      <y>0.128662646</y>
+      <z>0.00125084864</z>
+      <w>-0.99168694</w>
+      <eulerAngles>
+        <x>359.8401</x>
+        <y>345.2155</y>
+        <z>359.876221</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>f</title>
+    <AudioSubdirectory>media_for_compartment/1562158911</AudioSubdirectory>
+    <created>2019-07-03T13:01:51.017091-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>89CB1E13-2514-4F7A-98AB-1C8542BC2E84</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-0.260851145</x>
+      <y>-0.7500954</y>
+      <z>1.07569611</z>
+    </position>
+    <orientation>
+      <x>0.00029901</x>
+      <y>0.2127945</y>
+      <z>0</z>
+      <w>-0.977097</w>
+      <eulerAngles>
+        <x>359.966522</x>
+        <y>335.427673</y>
+        <z>0.00729119638</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>g</title>
+    <AudioSubdirectory>media_for_compartment/1562158925</AudioSubdirectory>
+    <created>2019-07-03T13:02:05.28124-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>23E2956D-BBBD-47F3-9431-D9B95AEC2D87</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-1.77072668</x>
+      <y>-0.781697035</y>
+      <z>0.85308516</z>
+    </position>
+    <orientation>
+      <x>-0.0007816314</x>
+      <y>0.4977876</y>
+      <z>0.00120843446</z>
+      <w>-0.8672978</w>
+      <eulerAngles>
+        <x>0.008750613</x>
+        <y>300.29245</y>
+        <z>359.835327</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>h</title>
+    <AudioSubdirectory>media_for_compartment/1562158930</AudioSubdirectory>
+    <created>2019-07-03T13:02:10.549913-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>26A26A2A-A4DA-4060-94B5-6B6BEF9C2172</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-1.34240985</x>
+      <y>-0.8078765</y>
+      <z>-1.73690677</z>
+    </position>
+    <orientation>
+      <x>0.000172633489</x>
+      <y>0.401510268</y>
+      <z>0</z>
+      <w>-0.9158545</w>
+      <eulerAngles>
+        <x>359.981873</x>
+        <y>312.654755</y>
+        <z>0.007942813</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>a</title>
+    <AudioSubdirectory>media_for_compartment/1562158947</AudioSubdirectory>
+    <created>2019-07-03T13:02:27.944777-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>C9754C25-4050-4949-ADED-AFF08DF7A736</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-1.19217134</x>
+      <y>-0.881747842</y>
+      <z>-0.01901257</z>
+    </position>
+    <orientation>
+      <x>-0</x>
+      <y>0.887436</y>
+      <z>-0.000122070313</z>
+      <w>-0.460931063</w>
+      <eulerAngles>
+        <x>0.0124136563</x>
+        <y>234.894409</y>
+        <z>0.00644760858</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>rulerend</title>
+    <AudioSubdirectory>media_for_compartment/1562159036</AudioSubdirectory>
+    <created>2019-07-03T13:03:56.200435-04:00</created>
+    <WavFileArray />
+    <ScreenGrab m_user="deheath" m_timestmap="2019-07-05T13:14:00.647442-04:00">
+      <m_filePath>media_for_compartment/1562159036/marker_grab.jpg</m_filePath>
+    </ScreenGrab>
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>72DE1C9B-EAA5-42E4-9CB6-B0F89DDC9AE8</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.6675978</x>
+      <y>-1.53544211</y>
+      <z>-1.15751064</z>
+    </position>
+    <orientation>
+      <x>-0</x>
+      <y>-0.9877875</y>
+      <z>0</z>
+      <w>-0.155807257</w>
+      <eulerAngles>
+        <x>0</x>
+        <y>162.072769</y>
+        <z>-0</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>floor</title>
+    <AudioSubdirectory>media_for_compartment/1562159071</AudioSubdirectory>
+    <created>2019-07-03T13:04:31.133683-04:00</created>
+    <WavFileArray />
+    <ScreenGrab m_user="deheath" m_timestmap="2019-07-05T13:12:54.309248-04:00">
+      <m_filePath>media_for_compartment/1562159071/marker_grab.jpg</m_filePath>
+    </ScreenGrab>
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>F9830AFE-CC7F-4EEC-A81F-F5EFD12B4C4B</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-0.514232934</x>
+      <y>0.967834</y>
+      <z>0.50214386</z>
+    </position>
+    <orientation>
+      <x>-0.46032083</x>
+      <y>0.000366210938</y>
+      <z>0.8877526</z>
+      <w>0</w>
+      <eulerAngles>
+        <x>359.962738</x>
+        <y>305.184357</y>
+        <z>180.0193</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>cieling</title>
+    <AudioSubdirectory>media_for_compartment/1562159094</AudioSubdirectory>
+    <created>2019-07-03T13:04:54.639088-04:00</created>
+    <WavFileArray />
+    <PlaneAlignment>0</PlaneAlignment>
+    <AnchorId>CF1254EC-ADF9-4F79-8CC9-38D98479B74B</AnchorId>
+    <SupportingAnchorsIds />
+    <AnchorPersistent>true</AnchorPersistent>
+  </MarkerData>
+</ArrayOfMarkerData>
