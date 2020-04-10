@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMarkerData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.220284909</x>
+      <y>-0.3677749</y>
+      <z>0.299092829</z>
+    </position>
+    <orientation>
+      <x>0.00144950463</x>
+      <y>0.996119</y>
+      <z>-0.001490058</z>
+      <w>-0.08799195</w>
+      <eulerAngles>
+        <x>0.155470029</x>
+        <y>190.096466</y>
+        <z>0.180481762</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>pt1</title>
+    <PlaneAlignment>0</PlaneAlignment>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>-0.0525233</x>
+      <y>-0.367701322</y>
+      <z>0.446827233</z>
+    </position>
+    <orientation>
+      <x>-0.0005179005</x>
+      <y>0.9013603</y>
+      <z>0.0007012406</z>
+      <w>-0.433069378</w>
+      <eulerAngles>
+        <x>359.953278</x>
+        <y>231.325073</y>
+        <z>359.9117</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>pt2</title>  
+    <PlaneAlignment>0</PlaneAlignment>
+  </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.0597609</x>
+      <y>-0.3677898</y>
+      <z>0.211510062</z>
+    </position>
+    <orientation>
+      <x>-0.000752492</x>
+      <y>0.961770058</y>
+      <z>0.0007425248</z>
+      <w>-0.273856372</w>
+      <eulerAngles>
+        <x>359.941772</x>
+        <y>211.787811</y>
+        <z>359.893768</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>ref</title>
+    <PlaneAlignment>0</PlaneAlignment>
+  </MarkerData>
+</ArrayOfMarkerData>
