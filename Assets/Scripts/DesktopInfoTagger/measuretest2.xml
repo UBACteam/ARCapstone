@@ -66,4 +66,26 @@
     <title>ref</title>
     <PlaneAlignment>0</PlaneAlignment>
   </MarkerData>
+  <MarkerData>
+    <type>0</type>
+    <position>
+      <x>0.1597609</x>
+      <y>-0.3677898</y>
+      <z>0.211510062</z>
+    </position>
+    <orientation>
+      <x>-0.000752492</x>
+      <y>0.961770058</y>
+      <z>0.0007425248</z>
+      <w>-0.273856372</w>
+      <eulerAngles>
+        <x>359.941772</x>
+        <y>211.787811</y>
+        <z>359.893768</z>
+      </eulerAngles>
+    </orientation>
+    <notes />
+    <title>ref2</title>
+    <PlaneAlignment>0</PlaneAlignment>
+  </MarkerData>
 </ArrayOfMarkerData>
