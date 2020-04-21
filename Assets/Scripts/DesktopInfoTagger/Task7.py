@@ -9,11 +9,18 @@ import pprint
 
 #Step 1: Pull Info from XML File
 
-def parseXML(xmlfile):
-    #Finds root of XML
-    tree = ET.parse(xmlfile)
+def parseXML():         #Made parseXML a void function so that error checking would work on it for file choosing
+    while True: 
+        #Finds root of XML
+        try:
+            xmlfile = input("Please type the name of the XML file that you would like to open (Include file extension) i.e. [measuretest2.xml]: ")
+            tree = ET.parse(xmlfile)
+            break
+        except OSError as e:
+           print("The file {0} doesn't exist, please try again | Ensure you included the file extension".format(xmlfile))
+           pass
+        
     root = tree.getroot()
-
     # Initializations of lists
     listOfFile = []
     titleArr = []
@@ -43,7 +50,7 @@ def parseXML(xmlfile):
         xArr.append(x)
         yArr.append(y)
         zArr.append(z) 
-   # Combines title, x, y, and z lists all into a single list
+    # Combines title, x, y, and z lists all into a single list
     listOfFile.extend(titleArr)
     listOfFile.extend(xArr)
     listOfFile.extend(yArr)
@@ -291,7 +298,7 @@ def main():
     Ref2 = []
 
     #Grab data from XML
-    List, length, Ref1 = parseXML('measuretest2.xml')
+    List, length, Ref1 = parseXML()     #Made ParseXML a void function so that error checking could go in for file choosing
 
     #Repsect to ref. point
     ToRef, Ref2 = RespectToRef(List, length)
@@ -316,7 +323,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-
-
-
