@@ -2,193 +2,324 @@ import numpy as np
 import math
 import csv
 import xml
-from xml.dom import minidom as md
+import xml.dom.minidom
 import xml.etree.ElementTree as ET
 import string 
 import pprint
 
 #Step 1: Pull Info from XML File
 
-
-
-
-#Ref: https://stackabuse.com/reading-and-writing-xml-files-in-python/   
-
-#Option 2 with etree
-#Ref: https://www.geeksforgeeks.org/xml-parsing-python/
-#Ref: https://docs.python.org/2/library/xml.etree.elementtree.html
-def parseXML(xmlfile):
-    #create element tree object
-    tree = ET.parse(xmlfile)
-
-    #Get Root Element
-    root = tree.getroot()
-
-    #create empty list for position items
-
-    #positionItems = []
-
-    #create empyt dictionary for position items
-    positionItems = {}
-
-    count = -1
-    #iterate position items #See if I can grab just x or just y or just z 
-    for position in root.findall('./MarkerData/position'):
+def parseXML():         #Made parseXML a void function so that error checking would work on it for file choosing
+    while True: 
+        #Finds root of XML
+        try:
+            xmlfile = input("Please type the name of the XML file that you would like to open (Include file extension) i.e. [measuretest2.xml]: ")
+            tree = ET.parse(xmlfile)
+            break
+        except OSError as e:
+           print("The file {0} doesn't exist, please try again | Ensure you included the file extension".format(xmlfile))
+           pass
         
-        #empty x dictionary
-        x = {}          #Unused if using positionItems
+    root = tree.getroot()
+    # Initializations of lists
+    listOfFile = []
+    titleArr = []
+    xArr = []
+    yArr = []
+    zArr = []
+    Ref1 = []
 
-        #empty y dictionary
-        y = {}          #Unused if using positionItems
+    # Adds each title element to title list
+    for title in root.findall('./MarkerData/title'):
+        titleArr.append(title.text)
 
-        #empty z dictionary
-        z = {}          #Unused if using positionItems
-        count  = count + 1
-        #print('count = {0}'.format(count))              #Debug print to ensure count was working 
-
+    # Adds each x,y,z element to corrosponding list
+    for position in root.findall('./MarkerData/position'):
+      
         for child in position:
             
             if child.tag == 'x':
-                key = (str(child.tag)+ str(count))
-                positionItems[key] = float(child.text)
-                
+                x = float(child.text)
 
-            elif child.tag == 'y':
-                key = (str(child.tag)+ str(count))
-                positionItems[key] = float(child.text)
-                
+            if child.tag == 'y':
+                y = float(child.text)
 
-            else:
-                key = (str(child.tag)+ str(count))
-                positionItems[key] = float(child.text)
-                
-                
+            if child.tag == 'z':
+                z = float(child.text)
 
-       # positionItems.append(x)
-        #positionItems.append(y)
-        #positionItems.append(z)
- 
-    #print('x[x0] + x[x1] = {0}'.format(positionItems[0]['x0'] + positionItems[3]['x1']))        #Test to see if the numbers are workable. It looks like they're all going into separate dictionaries though so it's a list of like 
-    print('positionItems[x0] + positionItems[x1] = {0}'.format((positionItems['x0'] + positionItems['x1'])))                                                                                     #30 dictionaries which each hold 3 values (x, y, z)
-    positionItems['ref'] = 0.0      #hard code reference point to 0. 
-                                    #Can be changed later`
-    return positionItems
+        xArr.append(x)
+        yArr.append(y)
+        zArr.append(z) 
+    # Combines title, x, y, and z lists all into a single list
+    listOfFile.extend(titleArr)
+    listOfFile.extend(xArr)
+    listOfFile.extend(yArr)
+    listOfFile.extend(zArr)
+    # Master List = [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]
 
-#This is current setup of the positionItems dictionary. One dictionary with multiple entries
+    #Finds length
+    Partiallength = len(titleArr)       # Partial length refers to length of one type of element, e.g. how many points there are
+    lengthOfList = len(listOfFile)
 
-#positionItems[x0] + positionItems[x1] = 0.47828006700000003
-#{'x0': 0.172116011,
-# 'x1': 0.306164056,
-# 'x10': 0.6675978,
-# 'x11': -0.514232934,
-# 'x2': -0.9749752,
-# 'x3': -1.06811023,
-# 'x4': -1.16732335,
-# 'x5': 0.0318306834,
-# 'x6': -0.260851145,
-# 'x7': -1.77072668,
-# 'x8': -1.34240985,
-# 'x9': -1.19217134,
-# 'y0': -0.8078765,
-# 'y1': -0.8078765,
-# 'y10': -1.53544211,
-# 'y11': 0.967834,
-# 'y2': -0.8078765,
-# 'y3': -0.8078765,
-# 'y4': -0.735115767,
-# 'y5': -0.9416122,
-# 'y6': -0.7500954,
-# 'y7': -0.781697035,
-# 'y8': -0.8078765,
-# 'y9': -0.881747842,
-# 'z0': -0.646990061,
-# 'z1': -1.48822832,
-# 'z10': -1.15751064,
-# 'z11': 0.50214386,
-# 'z2': -0.772379637,
-# 'z3': -0.45301944,
-# 'z4': 0.373182356,
-# 'z5': 0.6804357,
-# 'z6': 1.07569611,
-# 'z7': 0.85308516,
-# 'z8': -1.73690677,
-# 'z9': -0.01901257}
+    # x,y,z of Ref1
+    Ref1.append(listOfFile[2*Partiallength - 2])
+    Ref1.append(listOfFile[3*Partiallength - 2])
+    Ref1.append(listOfFile[lengthOfList - 2])
+    
+    print("Format is [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]")
+    print("Data from XML file: " +str(listOfFile))
 
-
-#Step 2: Pull items into Array 
-#Ref: https://www.geeksforgeeks.org/numpy-mathematical-function/
-
-"""
-Arrays should look like:
-
-
-T: 
-[   Cos(Theta)          Sin(Theta)              ]
-[   -Sin(Theta)         Cos(Theta               ]
-
-fFEM
-[   Fx          Fz          ] (Transposed)
-[                           ]
+    return listOfFile, Partiallength, Ref1
 
 
 
-"""
+    
+    
 
-#Step 3: Find marker points with respect to origin reference point (x0, y0) (n = arbitrary marker point number)
 
-"""
-x1’ = (x1 - x0)
-y1’ = (y1- y0)
-xn’ = (xn - x0)
-yn’ = (yn - y0)
-x0 = 0
-y0 = 0
-"""
+#Step 2: Find point with respect to ref1
+def RespectToRef(List, Partiallength):
+    # For better readability
+    length = Partiallength
+    
+   
+    # Assume ref1 point is 2nd last from end of list
+    lengthOfList = len(List)
+    xRef1 = List[2*length-2]
+    yRef1 = List[3*length-2]
+    zRef1 = List[4*length-2]
+    
+    i = 0
 
-#Step 4: Convert points to inches: inches = meter/0.0254
+    # Initializations of lists
+    # w.r.t Reference point 1
+    newRef2Arr = [] 
+    newxArr = []
+    newyArr = []
+    newzArr = []
+    newList = []
 
-#Step 5: Make Z Coordinate Normal to Deck by switching Y/Z Values 
+    # Finds each point w.r.t Ref1 (not including ref2)
+    while (i <= length-3):
+        # Master List = [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]
+        # x = oldx - refx
+        # y = oldy - refy
+        # refx is last x comp
+        # oldx starts at first x comp
+        # newx = oldx - refx
+        newx = List[length+i] - xRef1
+        newxArr.append(newx)                # x component
 
-#Step 6: Export to XML?
+        newy = List[2*length + i] - yRef1
+        newyArr.append(newy)                # y component
+
+        newz = List[3*length + i] - zRef1
+        newzArr.append(newz)                # z component
+
+        i += 1
+
+    # Ref2 with repsect to Ref1
+    xRef2 = List[2*length - 1] - xRef1
+    yRef2 = List[3*length - 1] - yRef1
+    zRef2 = List[4*length - 1] - zRef1
+    newRef2Arr.append(xRef2)
+    newRef2Arr.append(yRef2)
+    newRef2Arr.append(zRef2)
+
+    # Adds new x,y,z coords from each point
+    newList.extend(newxArr)
+    newList.extend(newyArr)
+    newList.extend(newzArr)
+
+    # New list includes marker points x,y,z. No titles, no references
+    print("\nFormat is [x1, x2, x3, ... xn, y1, y2, y3, ... yn, z1, z2, z3, .... zn]")
+    print("Repsect to reference point: " +str(newList))
+    return newList, newRef2Arr
+
+
+
+
+#Step 3: Conver to Inches 
+def ConvertToInches(List, Ref2):
+    # Ref2 conversion
+    Ref2[0] = Ref2[0] / 0.0254
+    Ref2[1] = Ref2[1] / 0.0254
+    Ref2[2] = Ref2[2] / 0.0254
+
+    # Marker points conversion
+    length = len(List)
+    i = 0
+    # meters / 0.0254
+    while (i < length):
+        List[i] = List[i] / 0.0254
+        i += 1
+
+    print("Converted to inches: " +str(List))
+    return List, Ref2
+
+
+#Step 4: Make Z Coordinate Normal to Deck by switching Y/Z Values 
+def NormalToDeck(List, Ref2):
+    # Ref2 Conversion
+    Temp = Ref2[1]
+    Ref2[1] = Ref2[2]
+    Ref2[2] = Temp
+
+    
+    length = len(List)
+    #length of one points coords
+    partialLength = int (length / 3)
+    i = 0
+    
+    # Marker points conversion
+    while (i < partialLength):
+        Temp = List[partialLength + i]
+        List[partialLength + i] = List[2*partialLength + i]
+        List[2*partialLength + i] = Temp
+        i += 1
+    
+    print("Normalized to deck: " +str(List))
+    return List, Ref2
+
+
+# Step 5: Transform
+def Transform1(List, Ref2):
+    # Initialize
+    length = len(List)
+    partialLength = int(length / 3)
+    i = 0
+    Point = []
+    ListOfPoints = []
+
+    #get angle using reference point 2
+    # Angle = tan(y/x)
+    # y = ref pt2 y
+    # x = ref pt2 x
+    angle = math.tan(Ref2[1] / Ref2[0])
+    
+    #Angle matrix
+    cos = math.cos(angle)
+    sin = math.sin(angle)
+    sin0 = -math.sin(angle)
+
+    # Form matrix
+    T = np.array([[cos, sin], [sin0, cos]])
+
+    # Marker Points Transformation
+    while (i < partialLength):
+        x = List[i]
+        y = List[partialLength + i]
+
+        Fem = np.array([x, y])
+        FemT = np.transpose(Fem)
+        TransformPt = T.dot(FemT)
+        NewTransformPt = np.append(TransformPt, [List[2*partialLength + i]])
+        Point = NewTransformPt.tolist()
+        ListOfPoints.append(Point)
+        i += 1
+    print("Transformation Points: " +str(ListOfPoints))
+
+    return ListOfPoints
+    
+
+# Step 6: Translate Ref1 to desired location
+def Translate(List, Ref1):
+    # Initialization
+    lengthOfList = len(List)
+    i = 0
+    WorldCoordinates = []
+    Ref1Translate = []
+
+    # Get world coords of Ref1 from user
+    print("\nReference Point = " +str(Ref1))
+    print("Enter World coordinates of Reference Point")
+    Ref1x = input("x-coordinate: ")
+    Ref1y = input("y-coordinate: ")
+    Ref1z = input("z-coordinate: ")
+    Ref1x = float(Ref1x)
+    Ref1y = float(Ref1y)
+    Ref1z = float(Ref1z)
+
+    # Convert each point to World Coords
+    while (i < lengthOfList):
+        Point = List[i]
+        
+        Translatex = Point[0] + Ref1x
+        WorldCoordinates.append(Translatex)
+
+        Translatey = Point[1] + Ref1y
+        WorldCoordinates.append(Translatey)
+
+        Translatez = Point[2] + Ref1z
+        WorldCoordinates.append(Translatez)
+        i += 1
+
+    print("\nFormat is [x1, y1, z1, x2, y2, z2, ... xn, yn, zn]")
+    print("World Coordinates: " +str(WorldCoordinates))
+    return WorldCoordinates
+
+
+    
+
+# -----------------WIP----------------------
+# Step 7: Export to XML
+def Export(List):
+    data = ET.Element("ArrayOfMarkerData")
+    Markers = ET.SubElement(data, "MarkerData")
+    Position = ET.SubElement(Markers, "Position")
+    i = 0
+    lengthOfList = len(List)
+
+    while (i < lengthOfList):
+        x = List[i]
+        y = List[i+1]
+        z = List[i+2]
+
+        
+        i += 3
+
+    mydata = ET.tostring(data)
+    myfile = open("WorldCoordinates.xml", "w")
+    myfile.write(mydata)
+
+
+
+
+
+
+
+
+
+
+
 def main():
-    print("Printing whole list")
-    pprint.pprint(parseXML('measuretest.xml'))
+    # Assumes XML format is pt1, pt2, pt3 ... ptn, ref1, ref2
+    Ref1 = []
+    Ref2 = []
+
+    #Grab data from XML
+    List, length, Ref1 = parseXML()     #Made ParseXML a void function so that error checking could go in for file choosing
+
+    #Repsect to ref. point
+    ToRef, Ref2 = RespectToRef(List, length)
+
+    #Convert to inches
+    ToInches, Ref2Inches = ConvertToInches(ToRef, Ref2)
+
+    #Normalize Z to Y
+    NormalZ, Ref2NormalZ = NormalToDeck(ToInches, Ref2Inches)
+
+    #Transform Points
+    TransformPts = Transform1(NormalZ, Ref2NormalZ)
+
+    #Translate Ref1 to Ship coords.
+    ShipCoordinates = Translate(TransformPts, Ref1)
+
+    #Export to XML (WIP)
+    #Export(ShipCoordinates)
+    
+
 
 
 if __name__ == "__main__":
     main()
-
-
-    #Test 1 with minidom: Problem: It gets all of the X's, not just the position
-
-#mydoc = md.parse('measuretest.xml')           #set up file parsing object 
-#xitems = mydoc.getelementsbytagname('x')      #parse file by positions
-#yitems = mydoc.getelementsbytagname('y')      #parse file by positions
-#zitems = mydoc.getelementsbytagname('z')      #parse file by positions
-
-##it's loading all x into the list, not just position. need to figure out how to intelligently only load position into list. 
-
-##print specific item attributes
-#print('position 1 name attribute: ')
-#print(items[0].attributes['name'].value)
-
-#print('printing entire list: ')
-#print(xitems)
-#for elem in range(0, len(xitems)):
-#    print('\n x[{0}] data:'.format(elem))
-#    print(xitems[elem].firstchild.data)
-#    print(xitems[elem].childnodes[0].data)
-
-#print('printing entire list: ')
-#print(yitems)
-#for elem in range(0, len(yitems)):
-#    print('\n y[{0}] data:'.format(elem))
-#    print(yitems[elem].firstchild.data)
-#    print(yitems[elem].childnodes[0].data)
-
-#print('printing entire list: ')
-#print(zitems)
-#for elem in range(0, len(xitems)):
-#    print('\n z[{0}] data:'.format(elem))
-#    print(zitems[elem].firstchild.data)
-#    print(zitems[elem].childnodes[0].data)
