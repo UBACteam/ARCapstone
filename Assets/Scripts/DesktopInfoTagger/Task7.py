@@ -9,19 +9,26 @@ import pprint
 
 #Step 1: Pull Info from XML File
 
-def parseXML(xmlfile):
-    #Finds root of XML
-    tree = ET.parse(xmlfile)
+def parseXML():         #Made parseXML a void function so that error checking would work on it for file choosing
+    while True: 
+        #Finds root of XML
+        try:
+            xmlfile = input("Please type the name of the XML file that you would like to open (Include file extension) i.e. [measuretest2.xml]: ")
+            tree = ET.parse(xmlfile)
+            break
+        except OSError as e:
+           print("The file {0} doesn't exist, please try again | Ensure you included the file extension".format(xmlfile))
+           pass
+        
     root = tree.getroot()
-
-    # Initializations of lists
+    # Initializations of lists  
     listOfFile = []
     titleArr = []
     xArr = []
     yArr = []
     zArr = []
     Ref1 = []
-
+    count = 0
     # Adds each title element to title list
     for title in root.findall('./MarkerData/title'):
         titleArr.append(title.text)
@@ -43,7 +50,7 @@ def parseXML(xmlfile):
         xArr.append(x)
         yArr.append(y)
         zArr.append(z) 
-   # Combines title, x, y, and z lists all into a single list
+    # Combines title, x, y, and z lists all into a single list
     listOfFile.extend(titleArr)
     listOfFile.extend(xArr)
     listOfFile.extend(yArr)
@@ -61,6 +68,18 @@ def parseXML(xmlfile):
     
     print("Format is [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]")
     print("Data from XML file: " +str(listOfFile))
+    
+    #count = 1
+    #for count in range(0, count):
+    #    print("Printing the thing")
+    #    print("{0} : {1}".format(titleArr[count], xArr[count]))
+    #    print("{0} : {1}".format(titleArr[count], yArr[count]))
+    #    print("{0} : {1}".format(titleArr[count], zArr[count]))
+    #    print("{0} : {1}".format(titleArr[count], Ref1[count]))
+    #    #rint("{0} : {1}".format(titleArr[count], Ref2[count]))
+    #    count += 1
+
+
 
     return listOfFile, Partiallength, Ref1
 
@@ -95,10 +114,11 @@ def RespectToRef(List, Partiallength):
     # Finds each point w.r.t Ref1 (not including ref2)
     while (i <= length-3):
         # Master List = [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]
+        # x = oldx - refx
+        # y = oldy - refy
         # refx is last x comp
         # oldx starts at first x comp
-        # new.x = old.x - ref.x
-        # new.y = old.y - ref.y
+        # newx = oldx - refx
         newx = List[length+i] - xRef1
         newxArr.append(newx)                # x component
 
@@ -182,12 +202,12 @@ def Transform1(List):
     i = 0
     Point = []
     ListOfPoints = []
-    
+
     #get angle using reference point 2
     # Angle = tan(y/x)
     # y = ref pt2 y
     # x = ref pt2 x
-    angle = math.tan(List[partialLength] / List[0])
+    angle = math.tan(List[partialLength]/List[0])
     
     #Angle matrix
     cos = math.cos(angle)
@@ -196,7 +216,7 @@ def Transform1(List):
 
     # Form matrix
     T = np.array([[cos, sin], [sin0, cos]])
-    
+
     # Marker Points Transformation
     while (i < partialLength):
         x = List[i]
@@ -290,7 +310,7 @@ def main():
     Ref2 = []
 
     #Grab data from XML
-    List, length, Ref1 = parseXML('measuretest2.xml')
+    List, length, Ref1 = parseXML()     #Made ParseXML a void function so that error checking could go in for file choosing
 
     #Repsect to ref. point
     ToRef, Ref2 = RespectToRef(List, length)
@@ -315,7 +335,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-
-
-
