@@ -21,14 +21,14 @@ def parseXML():         #Made parseXML a void function so that error checking wo
            pass
         
     root = tree.getroot()
-    # Initializations of lists
+    # Initializations of lists  
     listOfFile = []
     titleArr = []
     xArr = []
     yArr = []
     zArr = []
     Ref1 = []
-
+    count = 0
     # Adds each title element to title list
     for title in root.findall('./MarkerData/title'):
         titleArr.append(title.text)
@@ -68,6 +68,18 @@ def parseXML():         #Made parseXML a void function so that error checking wo
     
     print("Format is [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]")
     print("Data from XML file: " +str(listOfFile))
+    
+    #count = 1
+    #for count in range(0, count):
+    #    print("Printing the thing")
+    #    print("{0} : {1}".format(titleArr[count], xArr[count]))
+    #    print("{0} : {1}".format(titleArr[count], yArr[count]))
+    #    print("{0} : {1}".format(titleArr[count], zArr[count]))
+    #    print("{0} : {1}".format(titleArr[count], Ref1[count]))
+    #    #rint("{0} : {1}".format(titleArr[count], Ref2[count]))
+    #    count += 1
+
+
 
     return listOfFile, Partiallength, Ref1
 
@@ -183,7 +195,7 @@ def NormalToDeck(List, Ref2):
 
 
 # Step 5: Transform
-def Transform1(List, Ref2):
+def Transform1(List):
     # Initialize
     length = len(List)
     partialLength = int(length / 3)
@@ -195,7 +207,7 @@ def Transform1(List, Ref2):
     # Angle = tan(y/x)
     # y = ref pt2 y
     # x = ref pt2 x
-    angle = math.tan(Ref2[1] / Ref2[0])
+    angle = math.tan(List[partialLength]/List[0])
     
     #Angle matrix
     cos = math.cos(angle)
@@ -310,7 +322,7 @@ def main():
     NormalZ, Ref2NormalZ = NormalToDeck(ToInches, Ref2Inches)
 
     #Transform Points
-    TransformPts = Transform1(NormalZ, Ref2NormalZ)
+    TransformPts = Transform1(NormalZ)
 
     #Translate Ref1 to Ship coords.
     ShipCoordinates = Translate(TransformPts, Ref1)
