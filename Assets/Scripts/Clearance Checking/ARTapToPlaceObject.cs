@@ -1,5 +1,5 @@
 ﻿
-
+// -------------------------IMPORTS---------------------
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,101 +9,113 @@ using UnityEngine.XR.ARKit;
 using UnityEngine.VR;
 using System;
 using UnityEngine.UI;
+//------------------------------------------------------
+
 
 public class ARTapToPlaceObject : MonoBehaviour
 {
-    public GameObject objectToPlace;
-    public GameObject placementIndicator;
-    public Text Error;
+    // Public variables 
+    public GameObject objectToPlace;        // Object to be placed
+    public GameObject placementIndicator;   // Object to display in center of screen
+    public Text Error;                      // Error text to dispay
 
-   
+    // Private variables
     private ARPlaneManager arPlane;
     private ARRaycastManager arOrigin;
     private Pose placementPose;
-    private bool placementPoseIsValid = true;
 
     void Start()
     {
-        arOrigin = FindObjectOfType<ARRaycastManager>();
-        arPlane = FindObjectOfType<ARPlaneManager>();
+        arOrigin = FindObjectOfType<ARRaycastManager>();  // Raycast Manager
+        arPlane = FindObjectOfType<ARPlaneManager>();     // Plane Manager
     }
 
+    // Called every frame
     void Update()
     {
         UpdatePlacementPose();
-        //UpdatePlacementIndicator();
-
-        if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+       
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) // Checks for a screen tap
         {
             PlaceObject();
         }
     }
 
+    // Places objectToPlace
     private void PlaceObject()
     {
         Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
     }
 
-    private void UpdatePlacementIndicator()
-    {
-        if (placementPoseIsValid)
-        {
-            placementIndicator.SetActive(true);
-            placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
-        }
-        else
-        {
-            placementIndicator.SetActive(false);
-        }
-    }
 
+    // Used to update placement of PlacementIndicator
     private void UpdatePlacementPose()
     {
-        //var placementIndicatorRender = placementIndicator.GetComponent<Renderer>();
+        // Gets screen center pointing away from device
+        // Right hand corner of screen is (1,1) and bottom left is (0,0)
         var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+        // Creates list of ARRaycastHits
         var hits = new List<ARRaycastHit>();
-        
+        // Cast ray using screencenter and stores in hits list
+        // Only tracks if collides with finite ploygon
         arOrigin.Raycast(screenCenter, hits, TrackableType.PlaneWithinPolygon);
 
-        placementPoseIsValid = hits.Count > 0;
-        if (placementPoseIsValid)
+        // If there was a hit
+        if (hits.Count > 0)
         {
            
-           
+            // Initializes an ARPlane to hit plane 
             ARPlane plane = arPlane.GetPlane(hits[0].trackableId);
-            
+             
+            // Checks if plane is horizontal up (floor)
             if (plane.alignment == PlaneAlignment.HorizontalUp)
 
             {
+                // Updates PlacementPose to raycast hit pose
                 placementPose = hits[0].pose;
+
+                // Get rotational pose of camera in x & y
                 var cameraForward = Camera.current.transform.forward;
                 var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
                 placementPose.rotation = Quaternion.LookRotation(cameraBearing);
-                //placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
-                UpdatePlacementIndicator();
+
+                // Set placementIndicator position and rotation
+                placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+
+                // Displays error text
                 Error.text = "This is the floor";
 
+                // -------------------------------------------------------------------------------------
+                // THE REST OF THIS IF STATEMENT IS FOR FUTURE DEVELOPMENT (STILL IN TESTING)
+                // Feel free to comment this block out to use a different method. 
+
+                // Gets child of placementIndicator (Cube)
                 GameObject Cube = placementIndicator.transform.GetChild(0).gameObject;
+
+                // Gets children of cube
+                // Each side of the cube (except bottom & back sides) has another game object attached to
+                // determine location of the side of the cubes 
                 GameObject leftPlane = Cube.transform.GetChild(0).gameObject;
                 GameObject topPlane = Cube.transform.GetChild(1).gameObject;
                 GameObject rightPlane = Cube.transform.GetChild(2).gameObject;
                 GameObject frontPlane = Cube.transform.GetChild(3).gameObject;
 
-                Vector3 leftPlanePosition = leftPlane.transform.position;
+                // Gets postion of each side
+                Vector3 leftPlanePosition = leftPlane.transform.position; // current not used
                 Vector3 topPlanePosition = topPlane.transform.position;
                 Vector3 rightPlanePosition = rightPlane.transform.position;
                 Vector3 frontPlanePosition = frontPlane.transform.position;
 
-
-
-                //Pose leftPlane = placementIndicator.transform.Find("Left Plane").gameObject.GetComponent<Pose>();
-
+                // Receives direction vector of up, front, right
+                // No left direction implemented
+                // Possible solution is to get right direction of left plane then
+                // multiply by 180 degrees in x-dimension
                 Vector3 top = placementPose.up;
-                Vector3 right = placementPose.right; //new Vector3(1, 0, 0);
-                //Vector3 left = Quaternion.AngleAxis(right,     ;//new Vector3(-1, 0, 0);
+                Vector3 right = placementPose.right; //new Vector3(1, 0, 0)
                 Vector3 front = placementPose.forward; //new Vector3(0, 0, -1);
 
 
+                // This is a second method to cast rays out of the cube (NOT TESTED)
                 /*Renderer rend = placementIndicator.GetComponent<Renderer>();
                 float x1 = rend.bounds.max.x;
                 float x2 = rend.bounds.min.x;
@@ -121,32 +133,27 @@ public class ARTapToPlaceObject : MonoBehaviour
 
                 float xf = x1 - 
                 */
-
-
-                //placementIndicatorRender.material.SetColor("_Color", Color.blue);
-
-                //Ray leftRay = new Ray(leftPlanePosition, left);
+               
+                // Rays are casted out the planes
                 Ray topRay = new Ray(topPlanePosition, top);
                 Ray rightRay = new Ray(rightPlanePosition, right);
                 Ray frontRay = new Ray(frontPlanePosition, front);
+                //Ray leftRay = new Ray(leftPlanePosition, left); // After left direction is calcuated
 
-
+                // Creates a AR Raycast Hit for each plane
                 var leftHit = new List<ARRaycastHit>();
                 var topHit = new List<ARRaycastHit>();
                 var rightHit = new List<ARRaycastHit>();
                 var frontHit = new List<ARRaycastHit>();
-                //arOrigin.Raycast(leftRay, leftHit, TrackableType.All);
+
+                // Cast ray for each plane to collide with feature points
                 arOrigin.Raycast(topRay, topHit, TrackableType.All);
                 arOrigin.Raycast(rightRay, rightHit, TrackableType.All);
                 arOrigin.Raycast(frontRay, frontHit, TrackableType.All);
-                
+                //arOrigin.Raycast(leftRay, leftHit, TrackableType.All); // To be implemented
 
-
-               /* if (leftHit[0].distance < 0.05)
-                {
-                    Error.text = "Left Side Collision";
-                }*/
-
+                // If distance from plane side (origin of ray) to the collision of feature point
+                // is less than 10 cm then display an error
                 if (topHit[0].distance < 0.10)
                 {
                     Error.text = "Up Side Collision";
@@ -162,20 +169,19 @@ public class ARTapToPlaceObject : MonoBehaviour
                     Error.text = "Front Side Collision";
                 }
 
+                /* Implement later
+                if (leftHit[0].distance < 0.05)
+                 {
+                     Error.text = "Left Side Collision";
+                 }*/
 
 
-
-
-
-
-
-
-
-
-
+                // ---------------------------------------------------------------------------
 
 
             }
+
+            // Else plane must be vertical
             else
             {
                 Error.text = "Collision with Wall!";
@@ -184,20 +190,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
             }
         }
-        // Next is to detect collisions with planes
-
-        // Method 1
-        // Using cube (each side has 4 corners)
-        // Send a ray from each corner perpendiculer from cube side
-        // If ray hits a plane determine distance from corner is less than 0.01m then display error
-        // Only need to to do 4 sides (Top, left, right, foward)
-        // Cast 16 rays every frame
-
-        // Method 2
-        // If cube is on horizontal then no change.
-        // If cube is on vertical plane then change color of cube
-        // Maybe: change raycast to feature points, check if plane then place object
-        // That way if it detects a small object (no planes) then it would still work
     }
 }
 
