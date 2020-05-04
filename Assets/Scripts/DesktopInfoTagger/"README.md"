@@ -1,1 +1,6 @@
-Blank Readme to create DesktopInfoTagger Directory Script 
+This folder contains the source code for the Desktop InfoTagger coordinate conversion program and the import/export files used for testing
+There were two main collaborators on this file: Cody Rauseo and Jeff Rattray
+Cody named his files Task7.py since this was the 7th Sprint Task Assigned
+Jeff would download those files to make edits and upload DesktopInfoTagger.py and Task7.py whenever he made changes
+Jeff had a visual studios project that automatically named the source file that way
+the code should be the same. Git also served as our version control system so if you need to roll back versions, the code is there
