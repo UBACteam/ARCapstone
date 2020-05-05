@@ -27,15 +27,31 @@ def parseXML():
     listOfFile = []
     titleArr = []
     xArr = []
+    xDict = {}      #Dictionary for Pretty Printing
     yArr = []
+    yDict = {}      #Dictionary for Pretty Printing
     zArr = []
+    zDict = {}      #Dictionary for Pretty Printing 
     Ref1 = []
+    titleArrX = []
+    titleArrY = []
+    titleArrZ = []
+    titleDict = {}
+    xTemp = None
+    yTemp = None
+    zTemp = None
+    ptDict = {'x': xTemp, 'y': yTemp, 'z': zTemp}
+ 
 
     # Adds each title element to title list
     for title in root.findall('./MarkerData/title'):
         titleArr.append(title.text)
+        titleArrX.append(str(title.text) + ".x")
+        titleArrY.append(str(title.text) + ".y")
+        titleArrZ.append(str(title.text) + ".z")
 
-    # Adds each x,y,z element to corrosponding list
+
+    # Adds each x,y,z element to corresponding list
     for position in root.findall('./MarkerData/position'):
       
         for child in position:
@@ -52,6 +68,16 @@ def parseXML():
         xArr.append(x)
         yArr.append(y)
         zArr.append(z) 
+
+
+  
+
+
+
+
+
+            
+
    # Combines title, x, y, and z lists all into a single list
     listOfFile.extend(titleArr)
     listOfFile.extend(xArr)
@@ -67,11 +93,23 @@ def parseXML():
     Ref1.append(listOfFile[2*Partiallength - 2])
     Ref1.append(listOfFile[3*Partiallength - 2])
     Ref1.append(listOfFile[lengthOfList - 2])
-    
-    print("Format is [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]")
-    print("Data from XML file: " +str(listOfFile))
 
-    return listOfFile, Partiallength, Ref1
+     #Creates X,Y,Z Dicts for pretty printing
+    
+    xDict = dict(zip(titleArrX, xArr))
+    yDict = dict(zip(titleArrY, yArr))
+    zDict = dict(zip(titleArrZ, zArr))
+
+
+    
+    print("X Position Coordinates from XML\n")
+    pprint.pprint(xDict)
+    print("\nY Position Coordinates from XML\n")
+    pprint.pprint(yDict)
+    print("\nZ Position Coordinates from XML\n")
+    pprint.pprint(zDict)
+
+    return listOfFile, Partiallength, Ref1, 
 
 
 

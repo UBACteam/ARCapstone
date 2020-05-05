@@ -10,24 +10,48 @@ from xml.dom import minidom
 
 #Step 1: Pull Info from XML File
 
-def parseXML(xmlfile):
-    #Finds root of XML
-    tree = ET.parse(xmlfile)
+def parseXML():
+    while True: 
+        #Finds root of XML
+        try:
+            xmlfile = input("Please type the name of the XML file that you would like to open (Include file extension) (Default is measuretest2.xml): ") or 'measuretest2.xml'
+            tree = ET.parse(xmlfile)
+            break
+        except OSError as e:
+           print("The file {0} doesn't exist, please try again | Ensure you included the file extension".format(xmlfile))
+           pass
+
     root = tree.getroot()
 
     # Initializations of lists
     listOfFile = []
     titleArr = []
     xArr = []
+    xDict = {}      #Dictionary for Pretty Printing
     yArr = []
+    yDict = {}      #Dictionary for Pretty Printing
     zArr = []
+    zDict = {}      #Dictionary for Pretty Printing 
     Ref1 = []
+    titleArrX = []
+    titleArrY = []
+    titleArrZ = []
+    titleDict = {}
+    xTemp = None
+    yTemp = None
+    zTemp = None
+    ptDict = {'x': xTemp, 'y': yTemp, 'z': zTemp}
+ 
 
     # Adds each title element to title list
     for title in root.findall('./MarkerData/title'):
         titleArr.append(title.text)
+        titleArrX.append(str(title.text) + ".x")
+        titleArrY.append(str(title.text) + ".y")
+        titleArrZ.append(str(title.text) + ".z")
 
-    # Adds each x,y,z element to corrosponding list
+
+    # Adds each x,y,z element to corresponding list
     for position in root.findall('./MarkerData/position'):
       
         for child in position:
@@ -44,6 +68,16 @@ def parseXML(xmlfile):
         xArr.append(x)
         yArr.append(y)
         zArr.append(z) 
+
+
+  
+
+
+
+
+
+            
+
    # Combines title, x, y, and z lists all into a single list
     listOfFile.extend(titleArr)
     listOfFile.extend(xArr)
@@ -59,11 +93,23 @@ def parseXML(xmlfile):
     Ref1.append(listOfFile[2*Partiallength - 2])
     Ref1.append(listOfFile[3*Partiallength - 2])
     Ref1.append(listOfFile[lengthOfList - 2])
-    
-    print("Format is [(title1, title2, titleRef1, titleRef2), (x1, x2, xRef1, xRef2), (y1, y2, yRef, yRef2), (z1, z2, zRef, zRef2)]")
-    print("Data from XML file: " +str(listOfFile))
 
-    return listOfFile, Partiallength, Ref1
+     #Creates X,Y,Z Dicts for pretty printing
+    
+    xDict = dict(zip(titleArrX, xArr))
+    yDict = dict(zip(titleArrY, yArr))
+    zDict = dict(zip(titleArrZ, zArr))
+
+
+    
+    print("X Position Coordinates from XML\n")
+    pprint.pprint(xDict)
+    print("\nY Position Coordinates from XML\n")
+    pprint.pprint(yDict)
+    print("\nZ Position Coordinates from XML\n")
+    pprint.pprint(zDict)
+
+    return listOfFile, Partiallength, Ref1, 
 
 
 
@@ -270,6 +316,7 @@ def Export(List):
     while (i < length):             # al points
         x = List[i]                 # grabs coords
         y = List[i+1]
+        z = List[i+2]
 
         PointData = ET.Element("PositionData")  # create an element to store each points coords and title
         data.append(PointData)                  # adds as a child root
@@ -282,6 +329,9 @@ def Export(List):
 
         Y = ET.SubElement(PointData, 'y')           # creates child of PointData for y
         Y.text = str(y)                             # adds y value
+
+        Z = ET.SubElement(PointData, 'z')           # creates child of PointData for z
+        Z.text = str(z)                             # adds z value
         
         i += 3
         n += 1
@@ -309,7 +359,7 @@ def main():
     Ref2 = []
 
     #Grab data from XML
-    List, length, Ref1 = parseXML('measuretest2.xml')
+    List, length, Ref1 = parseXML()         #Made parseXML a void method so that error checking could go in for file choosing
 
     #Repsect to ref. point
     ToRef, Ref2 = RespectToRef(List, length)
@@ -334,7 +384,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-
-
-
